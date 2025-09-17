@@ -6,4 +6,5 @@ router.get("/:id", MedicationController.getById);
 router.post("/", MedicationController.create);
 router.put("/:id", MedicationController.update);
 router.delete("/:id", MedicationController.remove);
+
 export default router;

@@ -1,4 +1,5 @@
 import { supabase } from "../config/supabaseClient.js";
+
 export const SupplierModel = {
   async getAll() {
     const { data, error } = await supabase.from("suppliers").select("*");
@@ -15,15 +16,20 @@ export const SupplierModel = {
     if (error) throw error;
     return data;
   },
+
   async create(supplier) {
+    // Bisa terima object tunggal atau array of objects
+    const payload = Array.isArray(supplier) ? supplier : [supplier];
+
     const { data, error } = await supabase
       .from("suppliers")
-      .insert([supplier])
-      .select()
-      .single();
+      .insert(payload)
+      .select(); // ambil semua row yang baru masuk
+
     if (error) throw error;
     return data;
   },
+
   async update(id, supplier) {
     const { data, error } = await supabase
       .from("suppliers")
@@ -34,6 +40,7 @@ export const SupplierModel = {
     if (error) throw error;
     return data;
   },
+
   async remove(id) {
     const { error } = await supabase.from("suppliers").delete().eq("id", id);
     if (error) throw error;
