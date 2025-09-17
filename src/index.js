@@ -12,7 +12,12 @@ app.use("/api/suppliers", supplierRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/medications", medicationRoutes);
 app.use("/api/reports", reportRoutes);
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+
+if (process.env.NODE_ENV !== "production") {
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`✅ Server running locally on http://localhost:${port}`);
+  });
+}
+
+export default app;
