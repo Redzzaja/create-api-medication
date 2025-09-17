@@ -2,11 +2,12 @@ import { supabase } from "../config/supabaseClient.js";
 
 export const ReportModel = {
   async getTotalMedications() {
-    const { count, error } = await supabase
+    const { data, error } = await supabase
       .from("medications")
-      .select("id", { count: "exact", head: true });
+      .select("quantity");
 
     if (error) throw error;
-    return count;
+    const total = data.reduce((sum, item) => sum + item.quantity, 0);
+    return { total };
   },
 };
