@@ -1,13 +1,19 @@
 import { supabase } from "../config/supabaseClient.js";
 
 export const ReportModel = {
-  async getTotalMedications() {
+  async getTotals() {
     const { data, error } = await supabase
       .from("medications")
-      .select("quantity");
+      .select("id, quantity");
 
     if (error) throw error;
-    const total = data.reduce((sum, item) => sum + item.quantity, 0);
-    return { total };
+
+    const totalJenisObat = data.length;
+    const totalQuantityObat = data.reduce(
+      (sum, item) => sum + item.quantity,
+      0
+    );
+
+    return { totalJenisObat, totalQuantityObat };
   },
 };
